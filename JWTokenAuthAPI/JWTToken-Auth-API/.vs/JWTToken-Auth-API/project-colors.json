@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "36984471-3f14-475a-8f5b-e222d723e33f": {
+      "ProjectGuid": "36984471-3f14-475a-8f5b-e222d723e33f",
+      "DisplayName": "JWTToken-Auth-API",
+      "ColorIndex": 0
+    },
+    "ffa312e8-d5cb-4716-b32e-310db3ffa82a": {
+      "ProjectGuid": "ffa312e8-d5cb-4716-b32e-310db3ffa82a",
+      "DisplayName": "JWTToken-Auth-BAL",
+      "ColorIndex": 1
+    },
+    "ea706bfc-c5db-4383-827f-12cd7e33d99e": {
+      "ProjectGuid": "ea706bfc-c5db-4383-827f-12cd7e33d99e",
+      "DisplayName": "JWTToken-Auth-DAL",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 3
+}
