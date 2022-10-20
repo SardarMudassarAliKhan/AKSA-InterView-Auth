@@ -13,91 +13,76 @@ namespace JWTToken_Auth_API.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-    private readonly IWebHostEnvironment _env;
-    private readonly IEmployeeRepository _employee;
-    private readonly IDepartmentRepository _department;
-    public EmployeeController(IWebHostEnvironment env,
-        IEmployeeRepository employee,
-        IDepartmentRepository department)
-    {
-        _env = env;
-        _employee = employee ?? throw new ArgumentNullException(nameof(employee));
-        _department = department ?? throw new ArgumentNullException(nameof(department));
-    }
-
-    [HttpGet]
-    [Route("GetEmployee")]
-    public async Task<IActionResult> Get()
-    {
-        return Ok(await _employee.GetEmployees());
-    }
-
-
-    [HttpPost]
-    [Route("AddEmployee")]
-    public async Task<IActionResult> Post(Employee emp)
-    {
-
-        var result = await _employee.InsertEmployee(emp);
-        if (result == null)
+        private readonly IWebHostEnvironment _env;
+        private readonly IEmployeeRepository _employee;
+        private readonly IDepartmentRepository _department;
+        public EmployeeController(IWebHostEnvironment env,
+            IEmployeeRepository employee,
+            IDepartmentRepository department)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+            _env = env;
+            _employee = employee ?? throw new ArgumentNullException(nameof(employee));
+            _department = department ?? throw new ArgumentNullException(nameof(department));
         }
-        return Ok("Added Successfully");
-    }
 
-
-    [HttpPut]
-    [Route("UpdateEmployee")]
-    public async Task<IActionResult> Put(Employee emp)
-    {
-        var result = await _employee.UpdateEmployee(emp);
-        if (result == null)
+        [HttpGet]
+        [Route("GetEmployee")]
+        public async Task<IActionResult> Get()
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+            return Ok(await _employee.GetEmployees());
         }
-        return Ok("Updated Successfully");
-    }
 
 
-    [HttpDelete("{id}")]
-    public JsonResult Delete(int id)
-    {
-        var result = _employee.DeleteEmployee(id);
-        return new JsonResult("Deleted Successfully");
-    }
 
-
-    [Route("SaveFile")]
-    [HttpPost]
-    public JsonResult SaveFile()
-    {
-        try
+        [HttpPost]
+        [Route("AddEmployee")]
+        public async Task<IActionResult> Post(Employee emp)
         {
-            var httpRequest = Request.Form;
-            var postedFile = httpRequest.Files[0];
-            string filename = postedFile.FileName;
-            var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
 
-            using (var stream = new FileStream(physicalPath, FileMode.Create))
+            var result = await _employee.InsertEmployee(emp);
+            if (result == null)
             {
-                stream.CopyTo(stream);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
             }
-
-            return new JsonResult(filename);
+            return Ok("Added Successfully");
         }
-        catch (Exception)
+
+
+        [HttpPut]
+        [Route("UpdateEmployee")]
+        public async Task<IActionResult> Put(Employee emp)
         {
-            return new JsonResult("anonymous.png");
+            var result = await _employee.UpdateEmployee(emp);
+            if (result == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+            }
+            return Ok("Updated Successfully");
+        }
+        [HttpPost]
+        [Route("GetEmployeeById")]
+        public async Task<IActionResult> GetEmployeeById(String Id)
+        {
+
+            var result = await _employee.GetEmployeedByLogedInId(Id);
+            if (result == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+            }
+            return Ok("Record Fetched Successfully");
+        }
+
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            var result = _employee.DeleteEmployee(id);
+            return new JsonResult("Deleted Successfully");
+        }
+        [Route("GetAllDepartmentNames")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllDepartmentNames()
+        {
+            return Ok(await _department.GetDepartment());
         }
     }
-
-
-    [Route("GetAllDepartmentNames")]
-    [HttpGet]
-    public async Task<IActionResult> GetAllDepartmentNames()
-    {
-        return Ok(await _department.GetDepartment());
-    }
-}
 }

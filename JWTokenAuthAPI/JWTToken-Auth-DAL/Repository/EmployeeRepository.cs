@@ -29,6 +29,11 @@ namespace JWTToken_Auth_DAL.Repository
             return await _appDBContext.Employees.FindAsync(ID);
         }
 
+        public async Task<Employee> GetEmployeedByLogedInId(string ID)
+        {
+            return await _appDBContext.Employees.Where(x=>x.LoginId==ID).FirstOrDefaultAsync();
+        }
+
         public async Task<Employee> InsertEmployee(Employee objEmployee)
         {
             _appDBContext.Employees.Add(objEmployee);

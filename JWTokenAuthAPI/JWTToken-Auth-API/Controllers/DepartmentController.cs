@@ -32,6 +32,13 @@ namespace JWTToken_Auth_API.Controllers
             return Ok(await _department.GetDepartmentByID(Id));
         }
 
+        [HttpGet]
+        [Route("GetDepartmentByUserId/{Id}")]
+        public async Task<IActionResult> GetDepartmentByUserId(string Id)
+        {
+            return Ok(await _department.GetDepartmentByLoggedInUserId(Id));
+        }
+
         [HttpPost]
         [Route("AddDepartment")]
         public async Task<IActionResult> Post(Department dep)

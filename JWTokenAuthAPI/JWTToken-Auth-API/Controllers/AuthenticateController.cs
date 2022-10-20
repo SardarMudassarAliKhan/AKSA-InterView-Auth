@@ -271,9 +271,10 @@ namespace JWTToken_Auth_API.Controllers
 
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    user = user,
+                    Email = user.Email,
+                    DisplayName=user.UserName,
                     Role = userRoles,
                     status = "success"
                 });

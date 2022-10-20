@@ -29,7 +29,10 @@ namespace JWTToken_Auth_DAL.Repository
         {
             return await _appDBContext.Departments.FindAsync(ID);
         }
-
+        public async Task<Department> GetDepartmentByLoggedInUserId(string ID)
+        {
+            return await _appDBContext.Departments.Where(x=>x.LogInId== ID).FirstOrDefaultAsync();
+        }
         public async Task<Department> InsertDepartment(Department objDepartment)
         {
             _appDBContext.Departments.Add(objDepartment);
